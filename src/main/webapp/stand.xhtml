@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"/>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"/>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
+    <script  type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
+
+    <title>Sales Stand</title>
+
+    <h:outputScript name="js/stand.js"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if(typeof(EventSource) !== "undefined") {
+                var source = new EventSource("http://localhost:8080/advertising/stand/connection");
+                source.onmessage = function(event) {
+                    location.reload();
+                };
+            }
+        });
+    </script>
+    <style type="text/css">
+        img:active {
+            -webkit-transform: scale(2);
+            transform: scale(2);
+            z-index: 3;
+        }
+    </style>
+</h:head>
+<h:body>
+
+    <ui:include src="pages/header.xhtml"/>
+    <div class="main-content container">
+            <div class="row ">
+                <h2 class="display-4" style="margin-left: 40%">Top Paintings</h2>
+            </div>
+        <div class="row">
+            <ui:repeat value="#{itemList.itemTop}" var="product" >
+                        <div  class="col-lg-3 col-md-6 mb-3">
+                            <div class="card" style="height: 400px;">
+                                <img alt="#{product.name}" class="card-img-top img-fluid img-thumbnail" width="300" height="200" src="http://localhost:8080/image/#{product.id}" style="cursor:zoom-in;" />
+                                <div class="card-body ">
+                                    <h5 class="card-title"><a href="http://localhost:8080/item/#{product.id}" target="_blank" style="color: black"><strong> #{product.name}</strong></a></h5>
+                                    <h6><strong><i>$ #{product.price}</i></strong></h6>
+
+                                </div>
+                                <div class="card-footer">
+                                    <p class="card-text-bottom" style="color: darkred;">Total number of sales: #{product.numberOfSales}</p>
+                                </div>
+                            </div>
+                        </div>
+            </ui:repeat>
+    </div>
+    </div>
+</h:body>
+</html>
