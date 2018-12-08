@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Bean that stores  top itemss.
+ * Bean that stores  top items.
  * When stand-app got message from JMS server it will make a request
  * to the main application in order to get Updated top of items.
  *
